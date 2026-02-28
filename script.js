@@ -21,6 +21,44 @@
   const year = document.getElementById('year');
   if (year) year.textContent = new Date().getFullYear();
 
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.card, .timeline-item, .impact, .section-head');
+  revealEls.forEach(el => el.classList.add('reveal'));
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(el => revealObserver.observe(el));
+
+  // Active nav highlight
+  const sections = document.querySelectorAll('main section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+  if (sections.length && navLinks.length) {
+    const navObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(a => a.classList.remove('active'));
+          const active = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.35 });
+    sections.forEach(s => navObserver.observe(s));
+  }
+
+  // Back to top
+  const backToTop = document.getElementById('backToTop');
+  if (backToTop) {
+    window.addEventListener('scroll', () => {
+      backToTop.classList.toggle('visible', window.scrollY > 500);
+    }, { passive: true });
+    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  }
+
   // Animated counters on scroll
   const impactNums = document.querySelectorAll('.impact-number');
   if (impactNums.length && 'IntersectionObserver' in window) {
