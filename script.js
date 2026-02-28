@@ -21,6 +21,41 @@
   const year = document.getElementById('year');
   if (year) year.textContent = new Date().getFullYear();
 
+  // Animated counters on scroll
+  const impactNums = document.querySelectorAll('.impact-number');
+  if (impactNums.length && 'IntersectionObserver' in window) {
+    impactNums.forEach(el => {
+      el.dataset.target = el.textContent.trim();
+      el.textContent = '0';
+    });
+
+    const animateCounter = (el) => {
+      const raw = el.dataset.target;
+      const num = parseFloat(raw.replace(/[^0-9.]/g, ''));
+      const suffix = raw.replace(/[0-9.]/g, '');
+      const duration = 1600;
+      const start = performance.now();
+      const update = (now) => {
+        const progress = Math.min((now - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.round(eased * num) + suffix;
+        if (progress < 1) requestAnimationFrame(update);
+      };
+      requestAnimationFrame(update);
+    };
+
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !entry.target.dataset.animated) {
+          entry.target.dataset.animated = 'true';
+          animateCounter(entry.target);
+        }
+      });
+    }, { threshold: 0.6 });
+
+    impactNums.forEach(el => counterObserver.observe(el));
+  }
+
   // Contact form: Netlify Forms via AJAX
   const form = document.getElementById('contactForm');
   if (form) {
