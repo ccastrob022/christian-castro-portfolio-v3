@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Maple & Thyme — Farm-to-Table Restaurant</title>
+  <style>
+    :root{
+      --bg:#1a1208;--card:#231a0e;--gold:#c9922a;--gold2:#e8b84b;
+      --text:#f5ede0;--muted:#b8a48a;--line:rgba(201,146,42,.2);
+      --radius:16px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:ui-sans-serif,system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+    a{color:inherit;text-decoration:none}
+
+    /* Demo Banner */
+    .demo-banner{
+      background:rgba(124,92,255,.12);border-bottom:1px solid rgba(124,92,255,.25);
+      padding:.6rem 1.5rem;display:flex;align-items:center;justify-content:space-between;
+      flex-wrap:wrap;gap:.5rem;font-size:.82rem;
+    }
+    .demo-banner span{color:#b7c3dd}
+    .demo-banner a{color:#7c5cff;font-weight:700}
+    .demo-banner a:hover{text-decoration:underline}
+    .demo-cta{
+      background:rgba(124,92,255,.9);color:#fff!important;padding:.35rem .8rem;
+      border-radius:999px;font-weight:700;font-size:.8rem;white-space:nowrap;
+    }
+
+    /* Nav */
+    nav{
+      position:sticky;top:0;z-index:50;
+      background:rgba(26,18,8,.88);backdrop-filter:blur(14px);
+      border-bottom:1px solid var(--line);
+      display:flex;align-items:center;justify-content:space-between;
+      padding:.9rem 2rem;
+    }
+    .brand{font-size:1.3rem;font-weight:900;letter-spacing:.05em;
+      background:linear-gradient(135deg,var(--gold),var(--gold2));
+      -webkit-background-clip:text;background-clip:text;color:transparent}
+    .nav-links{display:flex;gap:1.5rem}
+    .nav-links a{color:var(--muted);font-weight:600;font-size:.95rem;transition:color .2s}
+    .nav-links a:hover{color:var(--text)}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;
+      padding:.7rem 1.3rem;border-radius:12px;font-weight:800;font-size:.9rem;
+      background:linear-gradient(135deg,var(--gold),var(--gold2));
+      color:#1a1208;transition:filter .2s,transform .2s;border:none;cursor:pointer;
+    }
+    .btn:hover{filter:brightness(1.1);transform:translateY(-2px)}
+    .btn-ghost{background:transparent;border:1px solid var(--line);color:var(--text)}
+
+    /* Hero */
+    .hero{
+      min-height:88vh;display:flex;align-items:center;
+      background:
+        radial-gradient(ellipse 120% 80% at 60% 40%,rgba(201,146,42,.18),transparent 65%),
+        radial-gradient(ellipse 80% 60% at 10% 80%,rgba(201,146,42,.08),transparent 50%),
+        var(--bg);
+      padding:5rem 2rem;
+    }
+    .hero-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}
+    .eyebrow{text-transform:uppercase;letter-spacing:.18em;font-size:.78rem;font-weight:700;color:var(--gold);margin-bottom:.75rem}
+    h1{font-size:clamp(2.2rem,4.5vw,3.4rem);line-height:1.1;margin-bottom:1.2rem;font-weight:900}
+    h1 span{background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .hero p{color:var(--muted);font-size:1.05rem;margin-bottom:1.8rem;max-width:50ch}
+    .cta-row{display:flex;gap:1rem;flex-wrap:wrap}
+    .hero-card{
+      background:var(--card);border:1px solid var(--line);border-radius:20px;
+      padding:2rem;display:flex;flex-direction:column;gap:1.2rem;
+    }
+    .hero-card h3{font-size:1.1rem;color:var(--gold2)}
+    .stat-row{display:flex;justify-content:space-between;gap:1rem}
+    .stat{text-align:center}
+    .stat-num{font-size:2rem;font-weight:900;background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .stat-label{font-size:.8rem;color:var(--muted);margin-top:.2rem}
+    .divider{height:1px;background:var(--line)}
+    .hours{display:grid;gap:.5rem}
+    .hours-row{display:flex;justify-content:space-between;font-size:.9rem}
+    .hours-row span:first-child{color:var(--muted)}
+
+    /* Section */
+    section{padding:4.5rem 2rem}
+    .container{max-width:1100px;margin:0 auto}
+    .section-head{text-align:center;margin-bottom:3rem}
+    .section-head h2{font-size:2rem;margin-bottom:.75rem}
+    .section-head h2 span{background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .section-head p{color:var(--muted);max-width:55ch;margin:0 auto}
+    .tag{display:inline-block;padding:.3rem .75rem;border-radius:999px;border:1px solid var(--line);color:var(--gold);font-size:.78rem;font-weight:700;margin-bottom:1rem;text-transform:uppercase;letter-spacing:.12em}
+
+    /* Features */
+    .features-alt{background:rgba(255,255,255,.02);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+    .features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+    .feat-card{
+      background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+      padding:1.8rem 1.5rem;transition:transform .22s,box-shadow .22s;
+    }
+    .feat-card:hover{transform:translateY(-5px);box-shadow:0 20px 48px rgba(0,0,0,.4),0 0 0 1px rgba(201,146,42,.2)}
+    .feat-icon{font-size:2rem;margin-bottom:1rem}
+    .feat-card h3{font-size:1.1rem;margin-bottom:.5rem}
+    .feat-card p{color:var(--muted);font-size:.93rem}
+
+    /* Menu */
+    .menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+    .menu-card{
+      background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+      overflow:hidden;transition:transform .22s,box-shadow .22s;
+    }
+    .menu-card:hover{transform:translateY(-5px);box-shadow:0 20px 48px rgba(0,0,0,.4)}
+    .menu-img{height:180px;display:flex;align-items:center;justify-content:center;font-size:4rem;
+      background:linear-gradient(135deg,rgba(201,146,42,.12),rgba(201,146,42,.04))}
+    .menu-body{padding:1.2rem}
+    .menu-body h4{font-size:1.05rem;margin-bottom:.35rem}
+    .menu-body p{color:var(--muted);font-size:.88rem;margin-bottom:.75rem}
+    .menu-footer{display:flex;align-items:center;justify-content:space-between}
+    .price{font-size:1.1rem;font-weight:900;color:var(--gold2)}
+    .badge-tag{font-size:.75rem;padding:.25rem .6rem;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+
+    /* Reservation */
+    .reservation-alt{background:rgba(255,255,255,.02);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+    .reservation-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+    .res-info h3{font-size:1.5rem;margin-bottom:1rem}
+    .res-info p{color:var(--muted);margin-bottom:1.5rem}
+    .info-list{list-style:none;display:flex;flex-direction:column;gap:.9rem}
+    .info-list li{display:flex;gap:.75rem;align-items:flex-start}
+    .info-list .ico{font-size:1.1rem;flex-shrink:0}
+    .info-list span{color:var(--muted);font-size:.93rem}
+    .form-card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:2rem}
+    .form-card h3{font-size:1.2rem;margin-bottom:1.5rem}
+    .form{display:grid;gap:1rem}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    label{display:flex;flex-direction:column;gap:.4rem;font-size:.88rem;font-weight:700;color:var(--muted)}
+    input,select,textarea{
+      background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:10px;
+      padding:.7rem .9rem;color:var(--text);font-size:.95rem;
+      transition:border-color .2s;
+    }
+    input:focus,select:focus,textarea:focus{outline:none;border-color:rgba(201,146,42,.5)}
+    select option{background:var(--card)}
+
+    /* Footer */
+    footer{background:var(--card);border-top:1px solid var(--line);padding:2.5rem 2rem;text-align:center}
+    footer p{color:var(--muted);font-size:.88rem}
+    footer strong{color:var(--gold)}
+
+    @media(max-width:900px){
+      .hero-inner,.features-grid,.menu-grid,.reservation-grid{grid-template-columns:1fr}
+      .form-row{grid-template-columns:1fr}
+      nav .nav-links{display:none}
+    }
+  </style>
+</head>
+<body>
+
+<div class="demo-banner">
+  <span>🔗 <strong>Live Demo</strong> — Business Website</span>
+  <span>Built by <a href="https://christiancastro.dev">Christian Castro</a> · Full Stack Developer in Canada</span>
+  <a class="demo-cta" href="https://christiancastro.dev/#contact">Request something like this →</a>
+</div>
+
+<nav>
+  <div class="brand">Maple & Thyme</div>
+  <div class="nav-links">
+    <a href="#menu">Menu</a>
+    <a href="#about">About</a>
+    <a href="#reservation">Reservations</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a class="btn" href="#reservation">Book a Table</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <p class="eyebrow">Farm-to-Table · Newmarket, Ontario</p>
+      <h1>Where every dish tells a <span>local story</span></h1>
+      <p>Seasonal ingredients from Ontario farms, crafted into unforgettable meals. Lunch, dinner, and private events in the heart of Newmarket.</p>
+      <div class="cta-row">
+        <a class="btn" href="#reservation">Book a Table</a>
+        <a class="btn btn-ghost" href="#menu">View Menu</a>
+      </div>
+    </div>
+    <div class="hero-card">
+      <h3>🕐 Hours & Info</h3>
+      <div class="stat-row">
+        <div class="stat"><div class="stat-num">12+</div><div class="stat-label">Years Open</div></div>
+        <div class="stat"><div class="stat-num">4.9</div><div class="stat-label">★ Google</div></div>
+        <div class="stat"><div class="stat-num">500+</div><div class="stat-label">Dishes Served</div></div>
+      </div>
+      <div class="divider"></div>
+      <div class="hours">
+        <div class="hours-row"><span>Monday – Thursday</span><span>12pm – 9pm</span></div>
+        <div class="hours-row"><span>Friday – Saturday</span><span>12pm – 11pm</span></div>
+        <div class="hours-row"><span>Sunday</span><span>11am – 8pm</span></div>
+      </div>
+      <a class="btn" href="#reservation" style="margin-top:.5rem">Reserve Now</a>
+    </div>
+  </div>
+</section>
+
+<section class="features-alt">
+  <div class="container">
+    <div class="section-head">
+      <div class="tag">Why choose us</div>
+      <h2>More than a <span>meal</span></h2>
+      <p>From sourcing to plating, every detail is handled with care.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feat-card"><div class="feat-icon">🌿</div><h3>Locally Sourced</h3><p>100% of our produce comes from Ontario farms within 150km. Fresh, seasonal, and sustainable.</p></div>
+      <div class="feat-card"><div class="feat-icon">👨‍🍳</div><h3>Chef-Crafted</h3><p>Our executive chef brings 20 years of experience from Toronto's top restaurants to your table.</p></div>
+      <div class="feat-card"><div class="feat-icon">🍷</div><h3>Curated Wine List</h3><p>Over 80 bottles from Ontario VQA and international vineyards, paired by our sommelier.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="menu">
+  <div class="container">
+    <div class="section-head">
+      <div class="tag">Spring Menu 2026</div>
+      <h2>Tonight's <span>Highlights</span></h2>
+      <p>A curated selection from our seasonal menu, updated weekly.</p>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-card"><div class="menu-img">🥗</div><div class="menu-body"><h4>Ontario Beet Salad</h4><p>Roasted golden beets, goat cheese, candied walnuts, lemon vinaigrette</p><div class="menu-footer"><span class="price">$18</span><span class="badge-tag">Vegetarian</span></div></div></div>
+      <div class="menu-card"><div class="menu-img">🍝</div><div class="menu-body"><h4>Wild Mushroom Risotto</h4><p>Ontario porcini, truffle oil, aged parmesan, fresh herbs</p><div class="menu-footer"><span class="price">$28</span><span class="badge-tag">Chef's Pick</span></div></div></div>
+      <div class="menu-card"><div class="menu-img">🥩</div><div class="menu-body"><h4>Ontario Striploin</h4><p>8oz grass-fed beef, roasted fingerlings, seasonal vegetables, red wine jus</p><div class="menu-footer"><span class="price">$46</span><span class="badge-tag">Signature</span></div></div></div>
+      <div class="menu-card"><div class="menu-img">🐟</div><div class="menu-body"><h4>Pan-Seared Lake Trout</h4><p>Lake Erie trout, lemon butter, capers, seasonal greens</p><div class="menu-footer"><span class="price">$38</span><span class="badge-tag">Local Catch</span></div></div></div>
+      <div class="menu-card"><div class="menu-img">🍜</div><div class="menu-body"><h4>Maple Glazed Duck</h4><p>Ontario duck breast, maple-bourbon glaze, sweet potato purée</p><div class="menu-footer"><span class="price">$42</span><span class="badge-tag">Most Loved</span></div></div></div>
+      <div class="menu-card"><div class="menu-img">🍮</div><div class="menu-body"><h4>Butter Tart Brûlée</h4><p>Classic Canadian butter tart reimagined as a silky crème brûlée</p><div class="menu-footer"><span class="price">$14</span><span class="badge-tag">Dessert</span></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="reservation" class="reservation-alt">
+  <div class="container">
+    <div class="reservation-grid">
+      <div class="res-info">
+        <div class="tag">Reservations</div>
+        <h3>Join us for an unforgettable evening</h3>
+        <p>We recommend booking ahead, especially on weekends. Walk-ins welcome based on availability.</p>
+        <ul class="info-list">
+          <li><span class="ico">📍</span><span>123 Main St N, Newmarket, Ontario L3Y 4W1</span></li>
+          <li><span class="ico">📞</span><span>+1 (905) 555-0192</span></li>
+          <li><span class="ico">✉️</span><span>hello@mapleandthyme.ca</span></li>
+          <li><span class="ico">🚗</span><span>Free parking at the rear of the building</span></li>
+          <li><span class="ico">♿</span><span>Fully accessible dining room and washrooms</span></li>
+        </ul>
+      </div>
+      <div class="form-card">
+        <h3>🍽️ Book a Table</h3>
+        <div class="form">
+          <div class="form-row">
+            <label>First Name<input type="text" placeholder="Jane"/></label>
+            <label>Last Name<input type="text" placeholder="Smith"/></label>
+          </div>
+          <div class="form-row">
+            <label>Date<input type="date"/></label>
+            <label>Time
+              <select>
+                <option>12:00 PM</option><option>12:30 PM</option>
+                <option>6:00 PM</option><option>6:30 PM</option>
+                <option>7:00 PM</option><option>7:30 PM</option><option>8:00 PM</option>
+              </select>
+            </label>
+          </div>
+          <div class="form-row">
+            <label>Guests<select><option>1</option><option>2</option><option>3</option><option>4</option><option>5–6</option><option>7+</option></select></label>
+            <label>Occasion<select><option>No occasion</option><option>Birthday</option><option>Anniversary</option><option>Business dinner</option></select></label>
+          </div>
+          <label>Special requests (optional)<textarea rows="3" placeholder="Allergies, dietary needs, seating preference…"></textarea></label>
+          <button class="btn" type="button" onclick="this.textContent='✅ Request sent!';this.style.background='linear-gradient(135deg,#22c55e,#16a34a)'">Request Reservation</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p><strong>Maple & Thyme</strong> · 123 Main St N, Newmarket, ON · +1 (905) 555-0192</p>
+  <p style="margin-top:.5rem">© 2026 Maple & Thyme Restaurant. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
